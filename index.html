@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Vadivel - Materialzie</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container">
+  <div class="row">
+      <div class="col s12">
+    <h1>Materialize-autocomplete</h1>
+    
+
+
+
+  </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+
+
+<form method="POST">
+
+<div class="row">
+<div class="col s12">
+<div class="input-field col s12">
+<div id="chipidCOLLEGE" name="college" class="chips chips-autocomplete-2"></div>
+<label for="autocomplete-input">Autocomplete</label>
+<input id="hiddenChipCOLLEGE" name="hiddenchipCOLLEGE" type="text" value="0">
+</div>
+<div class="col s12">
+<div id="chipidMAJOR" name="major" class="chips chips-autocomplete"></div>
+<label for="autocomplete-input">Major (Please start typing)</label>
+<input  id="hiddenChipMAJOR" name="hiddenchipMAJOR" type="text" value="0">
+</div>
+</div>
+
+<div class="row">
+<div class="col s12">
+<button id="button" class="btn waves-effect waves-light" type="submit" name="Submit">  NEXT <i class="material-icons right">send</i></button>
+</div>
+</div>
+</form>
+
+<script>
+// Initialize chips
+
+var selectLimitCOLLEGE  = 3; //you want change select limit value
+var initial_value_COLLEGE = [{
+     tag: 'Zane State College',
+   }, {
+     tag: 'Harvard University',
+   }];
+
+//var chipsDataCOLLEGE;
+var hiddenchipCOLLEGE;
+
+
+var tmpCOLLEGE = $('.chips-autocomplete-2').chips({
+   data: initial_value_COLLEGE,
+    autocompleteOptions: {
+      data: {
+		  'Zane State College':null,
+		  'Princeton University':null,
+		  'Stanford University':null,
+		  'Harvard University':null,
+		  'University of Southern California':null,
+		  'Zion Bible College':null
+      },
+      limit: Infinity,
+      minLength: 1
+    },
+    onChipAdd: function(){
+		if((this.chipsData).length > selectLimitCOLLEGE ){
+            jQuery('.chips-autocomplete-2 .chip:contains("'+this.chipsData[selectLimitCOLLEGE]['tag']+'")').remove();
+            this.chipsData = this.chipsData.slice(0, -1);
+        } else{
+            updateChipsCOLLEGE(this.chipsData)
+        }    
+    },
+    onChipDelete: function(){
+      updateChipsCOLLEGE(this.chipsData)
+    }
+});
+
+function updateChipsCOLLEGE(chipsDataCOLLEGE) {
+console.log(chipsDataCOLLEGE);
+  hiddenchipCOLLEGE = ''; // clear the chip string each tiem it changes to avoid duplictates
+  chipsDataCOLLEGE.forEach( element => hiddenchipCOLLEGE+=element.tag+', ' ); // Create chip string
+  hiddenchipCOLLEGE = hiddenchipCOLLEGE.slice(0, -2); // slice off the last comma and space
+  $('#hiddenChipCOLLEGE').val( hiddenchipCOLLEGE ); // pass string to hidden input
+}
+
+set_hidden_inputvalueCOLLEGE();
+function set_hidden_inputvalueCOLLEGE(){
+    var value_hidden_inputCOLLEGE = [];
+    jQuery.each(initial_value_COLLEGE, function (key, item) {
+        value_hidden_inputCOLLEGE.push(item.tag);
+    }); 
+    jQuery('#hiddenChipCOLLEGE').val(value_hidden_inputCOLLEGE.join());
+}
+//initail-value
+</script>
+
+
+<script>
+<!--- Chips Autocomplete --->
+// Initialize chips
+//$('#chipsMAJOR').chips();
+
+var selectLimitMAJOR  = 5; //you want change select limit value
+
+var initial_value_MAJOR = [{tag: 'math',},
+  {tag: 'art',},
+  {tag: 'english',}];
+
+//var chipsData;
+var hiddenchipMAJOR;
+
+function updateChipsMAJOR(chipsData) {
+
+  hiddenchipMAJOR = ''; // clear the chip string each tiem it changes to avoid duplictates
+  chipsData.forEach( element => hiddenchipMAJOR+=element.tag+', ' ); // Create chip string
+  hiddenchipMAJOR = hiddenchipMAJOR.slice(0, -2); // slice off the last comma and space
+  $('#hiddenChipMAJOR').val( hiddenchipMAJOR ); // pass string to hidden input
+}
+  
+var tmpMAJOR = $('.chips-autocomplete').chips({
+   data: initial_value_MAJOR,
+    autocompleteOptions: {
+      data: {
+'math':null,
+'english':null,
+'science':null,
+'history':null,
+'computer programming':null,
+'computer science':null,
+'economics':null,
+'art history':null
+	  },
+      limit: Infinity,
+      minLength: 2
+    },
+    onChipAdd: function(){
+		if((this.chipsData).length > selectLimitMAJOR ){
+            jQuery('.chips-autocomplete-2 .chip:contains("'+this.chipsData[selectLimitMAJOR]['tag']+'")').remove();
+            this.chipsData = this.chipsData.slice(0, -1);
+        } else{
+            updateChipsMAJOR(this.chipsData);
+        }    
+    },
+    onChipDelete: function(){
+      updateChipsMAJOR(this.chipsData)
+    }
+});
+
+set_hidden_inputvalueMAJOR();
+function set_hidden_inputvalueMAJOR(){
+    var value_hidden_inputMAJOR = [];
+    jQuery.each(initial_value_MAJOR, function (key, item) {
+        value_hidden_inputMAJOR.push(item.tag);
+    }); 
+    jQuery('#hiddenChipMAJOR').val(value_hidden_inputMAJOR.join());
+}
+//initail-value
+</script>
+
+
+
+</body>
+</html>
